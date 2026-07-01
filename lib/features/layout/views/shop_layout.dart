@@ -26,11 +26,11 @@ class Shoplayout extends StatelessWidget {
               title: Row(
                 spacing: 5,
                 mainAxisSize:
-                    MainAxisSize.min, // علشان الاسم والأيقونة يبقوا مع بعض
+                    MainAxisSize.min, 
                 children: [
                   SizedBox(width: 8.w),
                   Text(
-                    'Bavly Store',
+                    'Store',
                     style: TextStyle(
                       color: Color(0xff004182),
                       fontSize: 22.sp,
