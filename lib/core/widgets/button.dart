@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DefaultButton extends StatelessWidget {
-  DefaultButton({
+  final String buttontitle;
+  final Color? backgroundcolor;
+  final Color? foregoundcolor;
+  final void Function()? onPressed;
+  final double? fontSize; // خليناه يقبل يكون فاضي عشان الـ ?? تشتغل صح
+
+  const DefaultButton({
     this.buttontitle = "",
-    this.foregoundcolor,
-    this.backgroundcolor,
+    this.backgroundcolor = Colors.blue, // القيم الافتراضية الصح بتكون هنا
+    this.foregoundcolor = Colors.white, // خلتلك لون النص أبيض عشان يبان ع الأزرق
     required this.onPressed,
-     required this.fontSize ,
+    this.fontSize, // شيلنا الـ required وخليناه اختياري عشان لو متبعتش ياخد 20 تلقائي
     super.key,
   });
-  String buttontitle;
-  Color? backgroundcolor = Colors.blue;
-  Color? foregoundcolor = Colors.blue;
-  void Function()? onPressed;
-  double fontSize ;
 
   @override
   Widget build(BuildContext context) {
@@ -22,22 +23,23 @@ class DefaultButton extends StatelessWidget {
       width: double.infinity,
       height: 60.h,
       child: ElevatedButton(
-        
-        
         style: ElevatedButton.styleFrom(
-          animationDuration: Duration(milliseconds: 400),
-            
+          animationDuration: const Duration(milliseconds: 400),
           elevation: 3.r,
           backgroundColor: backgroundcolor,
           foregroundColor: foregoundcolor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadiusGeometry.circular(15.r),
-
+            borderRadius: BorderRadius.circular(15.r), // تعديل بسيط هنا عشان يشتغل صح
           ),
         ),
         onPressed: onPressed,
-        child: Text(buttontitle,style: TextStyle(fontSize: fontSize ??20.sp,
-        fontWeight: FontWeight.w700),),
+        child: Text(
+          buttontitle,
+          style: TextStyle(
+            fontSize: fontSize ?? 20.sp, // لو مبعتيش مقاس، هيبقى 20 تلقائي
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ),
     );
   }
