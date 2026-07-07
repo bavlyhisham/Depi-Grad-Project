@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, prefer_if_null_operators
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -39,7 +41,7 @@ class DefaultTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      onTap:onTap ,
+      onTap: onTap,
 
       onFieldSubmitted: onFieldSubmittedFunction,
       textInputAction: textInputAction,
@@ -58,9 +60,7 @@ class DefaultTextFormField extends StatelessWidget {
 
         labelText: labelText,
         labelStyle: TextStyle(fontSize: 18.sp),
-        prefixIcon: prefixIcon != null
-            ? prefixIcon
-            : null,
+        prefixIcon: prefixIcon != null ? prefixIcon : null,
 
         suffixIcon: IconButton(
           hoverColor: Colors.white,
@@ -70,20 +70,20 @@ class DefaultTextFormField extends StatelessWidget {
         ),
         border: OutlineInputBorder(borderSide: BorderSide(color: borderColor)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderredius??15.r),
+          borderRadius: BorderRadius.circular(borderredius ?? 15.r),
           borderSide: BorderSide(color: enableBorderColor),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderredius??15.r),
+          borderRadius: BorderRadius.circular(borderredius ?? 15.r),
           borderSide: BorderSide(color: enableBorderColor),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderredius??15.r),
+          borderRadius: BorderRadius.circular(borderredius ?? 15.r),
           borderSide: BorderSide(color: Colors.red),
         ),
         errorStyle: TextStyle(color: Colors.red, fontSize: 14.sp),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderredius??15.r),
+          borderRadius: BorderRadius.circular(borderredius ?? 15.r),
           borderSide: BorderSide(color: Colors.red),
         ),
       ),

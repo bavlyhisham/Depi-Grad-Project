@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:depi/core/networks/remote/dio_helper.dart';
 import 'package:depi/core/networks/remote/product_model.dart';
 import 'package:depi/features/home/controler/home_states.dart';
@@ -5,7 +7,6 @@ import 'package:depi/features/layout/controler/layout_cubit.dart';
 import 'package:depi/features/layout/controler/layout_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 class HomeCubit extends Cubit<HomeStates> {
   HomeCubit() : super(HomeIntialState());
@@ -56,8 +57,6 @@ class HomeCubit extends Cubit<HomeStates> {
     return true;
   }
 
-
-
   void getProductData() {
     emit(GetProductLoadingState());
     DioHelper.getData(url: '/api/v1/products')
@@ -75,10 +74,7 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   void seeAllCategories(BuildContext context) {
-  LayoutCubit.get(context).currentindex = 1;
-  LayoutCubit.get(context).emit(BottomNavBarChangeState());
-
+    LayoutCubit.get(context).currentindex = 1;
+    LayoutCubit.get(context).emit(BottomNavBarChangeState());
   }
-  
-  
 }

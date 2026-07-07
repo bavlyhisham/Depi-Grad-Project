@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, unused_local_variable
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:depi/core/widgets/button.dart';
 import 'package:depi/features/home/controler/home_cubit.dart';

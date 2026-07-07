@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:dio/dio.dart';
 
 class DioHelper {
@@ -49,6 +51,7 @@ class DioHelper {
       options: Options,
     );
   }
+
   static Future<Response> putData({
     required String url,
     Map<String, dynamic>? query,

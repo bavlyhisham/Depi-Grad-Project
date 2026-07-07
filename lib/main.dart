@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, unused_import
+
 import 'dart:developer';
 import 'package:depi/core/blocObserver/blocObsever.dart';
 import 'package:depi/core/networks/remote/dio_helper.dart';
@@ -8,15 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-void main()  {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   Bloc.observer = MyBlocObserver();
 
   DioHelper.init();
-
-  
 
   runApp(Main());
 }
@@ -29,15 +28,12 @@ class Main extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => LayoutCubit()),
-      BlocProvider(create: (context) => HomeCubit()..getProductData()),
-
-      
+        BlocProvider(create: (context) => HomeCubit()..getProductData()),
       ],
       child: ScreenUtilInit(
         designSize: Size(412, 924),
         minTextAdapt: true,
         child: MaterialApp(
-      
           debugShowCheckedModeBanner: false,
           home: Shoplayout(),
         ),

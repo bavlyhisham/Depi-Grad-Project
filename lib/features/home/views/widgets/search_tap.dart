@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:depi/core/widgets/textformfiled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -77,7 +79,7 @@ class Searchtap extends StatelessWidget {
           //             child: Container(
           //               padding: EdgeInsets.all(4.r),
           //               decoration: BoxDecoration(
-                        
+
           //                 shape: BoxShape.circle,
           //               ),
           //               child: Text(
@@ -92,8 +94,7 @@ class Searchtap extends StatelessWidget {
           //           ),
           //       ],
           //     );
-            
-            
+
           //   },
           //   ),
           // ),
