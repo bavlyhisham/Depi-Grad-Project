@@ -11,6 +11,7 @@ class Productcard extends StatelessWidget {
     required this.products,
     super.key,
   });
+
   final int index;
   final ImageProvider<Object>? imageProvider;
   final List products;
@@ -26,7 +27,6 @@ class Productcard extends StatelessWidget {
           color: const Color(0xff004182).withAlpha(70),
         ),
       ),
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,33 +37,15 @@ class Productcard extends StatelessWidget {
                   topLeft: Radius.circular(13.r),
                   topRight: Radius.circular(13.r),
                 ),
-<<<<<<< HEAD
                 child: Image(
                   image:
                       imageProvider ??
-                      NetworkImage(
+                      const NetworkImage(
                         'https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg',
                       ),
                   height: 175.h,
                   width: double.infinity,
                   fit: BoxFit.cover,
-=======
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(13.r),
-                    topRight: Radius.circular(13.r),
-                  ),
-                  child: Image(
-                    image:
-                        imageProvider ??
-                        NetworkImage(
-                          'https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg',
-                        ),
-                    height: 175.h,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
->>>>>>> 0f4fb80 (refactor product details screen and update home ui components)
                 ),
               ),
               products[index].priceAfterDiscount != 0
@@ -75,14 +57,13 @@ class Productcard extends StatelessWidget {
                         height: 60.h,
                       ),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
             ],
           ),
 
           Padding(
-            padding: EdgeInsetsGeometry.symmetric(horizontal: 6.w),
+            padding: EdgeInsets.symmetric(horizontal: 6.w),
             child: Column(
-              spacing: 5.h,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 5.h),
@@ -93,10 +74,13 @@ class Productcard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 15.sp,
-                    height: 1.2.h,
-                    color: Color(0xff06004F),
+                    height: 1.2,
+                    color: const Color(0xff06004F),
                   ),
                 ),
+
+                SizedBox(height: 5.h),
+
                 products[index].priceAfterDiscount != 0
                     ? Row(
                         children: [
@@ -107,7 +91,7 @@ class Productcard extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 17.sp,
                               fontWeight: FontWeight.w500,
-                              color: Color.fromRGBO(6, 0, 79, 1),
+                              color: const Color.fromRGBO(6, 0, 79, 1),
                             ),
                           ),
                           SizedBox(width: 5.w),
@@ -116,7 +100,7 @@ class Productcard extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 12.sp,
                               decoration: TextDecoration.lineThrough,
-                              color: Color.fromRGBO(0, 65, 130, 0.6),
+                              color: const Color.fromRGBO(0, 65, 130, 0.6),
                             ),
                           ),
                         ],
@@ -128,52 +112,58 @@ class Productcard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 15.sp,
                           fontWeight: FontWeight.w500,
-                          color: Color.fromRGBO(6, 0, 79, 1),
+                          color: const Color.fromRGBO(6, 0, 79, 1),
                         ),
                       ),
+
+                SizedBox(height: 5.h),
+
                 Row(
-                  spacing: 5.w,
                   children: [
                     Text(
                       'Review (${products[index].ratingsAverage})',
                       style: TextStyle(
-                        color: Color.fromRGBO(6, 0, 79, 1),
+                        color: const Color.fromRGBO(6, 0, 79, 1),
                         fontSize: 15.sp,
                       ),
                     ),
+                    SizedBox(width: 5.w),
                     Icon(
                       Icons.star,
                       size: 20.sp,
-                      color: Color.fromRGBO(253, 216, 53, 1),
+                      color: const Color.fromRGBO(253, 216, 53, 1),
                     ),
-                    Spacer(),
+                    const Spacer(),
+
                     // BlocBuilder<CartCubit, CartStates>(
                     //   builder: (context, state) {
                     //     var productId = products[index].id;
                     //     var cartCubit = CartCubit.get(context);
                     //     bool isLoading =
                     //         cartCubit.loadingProducts[productId] ?? false;
-
+                    //
                     //     return SizedBox(
                     //       height: 30.h,
                     //       width: 30.w,
                     //       child: IconButton(
                     //         onPressed: () {
-                    //           isLoading?null:
-
-                    //           cartCubit.addtocart(
-                    //             products[index].id,
-                    //           );
+                    //           if (!isLoading) {
+                    //             cartCubit.addtocart(products[index].id);
+                    //           }
                     //         },
                     //         style: IconButton.styleFrom(
-                    //           padding: EdgeInsets.all(0),
-                    //           backgroundColor: Color.fromRGBO(0, 65, 130, 1),
+                    //           padding: EdgeInsets.zero,
+                    //           backgroundColor: const Color.fromRGBO(0, 65, 130, 1),
                     //         ),
-
-                    //         icon: isLoading?SizedBox(
-                    //           width: 12.w,
-                    //           height: 12.h,
-                    //           child: CircularProgressIndicator(color: Colors.white,)):  Icon(Icons.add,size: 25.sp,),
+                    //         icon: isLoading
+                    //             ? SizedBox(
+                    //                 width: 12.w,
+                    //                 height: 12.h,
+                    //                 child: const CircularProgressIndicator(
+                    //                   color: Colors.white,
+                    //                 ),
+                    //               )
+                    //             : Icon(Icons.add, size: 25.sp),
                     //       ),
                     //     );
                     //   },
