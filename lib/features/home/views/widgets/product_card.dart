@@ -37,6 +37,7 @@ class Productcard extends StatelessWidget {
                   topLeft: Radius.circular(13.r),
                   topRight: Radius.circular(13.r),
                 ),
+<<<<<<< HEAD
                 child: Image(
                   image:
                       imageProvider ??
@@ -46,6 +47,23 @@ class Productcard extends StatelessWidget {
                   height: 175.h,
                   width: double.infinity,
                   fit: BoxFit.cover,
+=======
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(13.r),
+                    topRight: Radius.circular(13.r),
+                  ),
+                  child: Image(
+                    image:
+                        imageProvider ??
+                        NetworkImage(
+                          'https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg',
+                        ),
+                    height: 175.h,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+>>>>>>> 0f4fb80 (refactor product details screen and update home ui components)
                 ),
               ),
               products[index].priceAfterDiscount != 0
