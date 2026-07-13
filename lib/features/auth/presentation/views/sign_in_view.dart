@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/app_colors.dart';
-// التعديل هنا: استيراد ملف الـ CacheHelper (تأكدي من صحة المسار حسب مشروعك)
 import '../../../../core/cash/cache_helper.dart'; 
 import '../../manager/auth_cubit.dart';
 import '../../manager/auth_state.dart';
@@ -37,8 +36,6 @@ class _SignInViewState extends State<SignInView> {
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
-            // التعديل هنا: حفظ حالة تسجيل الدخول في الكاش قبل الانتقال للهوم
-            // لو الـ state بترجع token تقدري تحفظيه كقيمة String، هنا هنحفظ قيمة bool مؤقتاً
             CacheHelper.saveData(key: 'isLoggedIn', value: true);
 
             ScaffoldMessenger.of(context).showSnackBar(
@@ -87,7 +84,8 @@ class _SignInViewState extends State<SignInView> {
                     'Email / User Name', 
                     style: TextStyle(color: AppColors.white, fontSize: 16),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height:10),
+
                   CustomTextField(
                     hintText: 'enter your name or email', 
                     controller: emailController,
