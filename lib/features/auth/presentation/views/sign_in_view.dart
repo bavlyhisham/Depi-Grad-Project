@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/app_colors.dart';
-// التعديل هنا: استيراد ملف الـ CacheHelper (تأكدي من صحة المسار حسب مشروعك)
 import '../../../../core/cash/cache_helper.dart'; 
 import '../../manager/auth_cubit.dart';
 import '../../manager/auth_state.dart';
 import '../widgets/custom_text_field.dart';
 import 'sign_up_view.dart';
-import 'package:depi/features/auth/presentation/views/home_view.dart';
+import 'package:depi/features/layout/views/shop_layout.dart';
 import 'forgot_password_view.dart'; 
 
 class SignInView extends StatefulWidget {
@@ -47,7 +46,7 @@ class _SignInViewState extends State<SignInView> {
             
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HomeView()),
+              MaterialPageRoute(builder: (context) => const Shoplayout()),
             );
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
