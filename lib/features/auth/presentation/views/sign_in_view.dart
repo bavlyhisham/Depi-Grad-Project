@@ -6,7 +6,7 @@ import '../../manager/auth_cubit.dart';
 import '../../manager/auth_state.dart';
 import '../widgets/custom_text_field.dart';
 import 'sign_up_view.dart';
-import 'package:depi/features/auth/presentation/views/home_view.dart';
+import 'package:depi/features/layout/views/shop_layout.dart';
 import 'forgot_password_view.dart'; 
 
 class SignInView extends StatefulWidget {
@@ -44,7 +44,7 @@ class _SignInViewState extends State<SignInView> {
             
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HomeView()),
+              MaterialPageRoute(builder: (context) => const Shoplayout()),
             );
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
