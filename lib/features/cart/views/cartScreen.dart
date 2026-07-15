@@ -8,6 +8,8 @@ import 'package:depi/features/cart/views/widgets/promo_code_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:depi/features/layout/controler/layout_cubit.dart';
+import 'package:depi/features/layout/views/shop_layout.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -44,7 +46,7 @@ class _CartScreenState extends State<CartScreen> {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(
-            Icons.arrow_back_ios_new,
+            Icons.arrow_back_ios_new_rounded,
             color: Color(0xFF004182),
             size: 25,
           ),
@@ -52,46 +54,80 @@ class _CartScreenState extends State<CartScreen> {
             Navigator.pop(context);
           },
         ),
-        title: Text(
-          'Shopping Bag',
-          style: TextStyle(
-            color: const Color(0xFF004182),
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w700,
+        title: Tooltip(
+          message: "Back to Home screen",
+          child: InkWell(
+            borderRadius: BorderRadius.circular(8),
+            onTap: () {
+              LayoutCubit.get(context).changebottomstate(0);
+
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => const Shoplayout()),
+                (route) => false,
+              );
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Depi Store",
+                  style: TextStyle(
+                    color: const Color(0xff06004F),
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: .3,
+                  ),
+                ),
+                // SizedBox(width: 8.w),
+                // Icon(
+                //   Icons.shopping_bag_outlined,
+                //   color: Color(0xff004182),
+                //   size: 28.sp,
+                // ),
+              ],
+            ),
           ),
         ),
         // آيكون الشنطة والنقطة الحمراء ثابتة علطول
         actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.shopping_bag_outlined,
-                    color: Color(0xFF004182),
-                    size: 26,
-                  ),
-                  onPressed: () {
-                    // الأكشن بتاعك هنا
-                  },
-                ),
-                // النقطة الحمراء دايماً موجودة
-                Positioned(
-                  top: 12,
-                  right: 10,
-                  child: Container(
-                    width: 8,
-                    height: 8,
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
+          BlocBuilder<CartCubit, CartStates>(
+            builder: (context, state) {
+              final cartCubit = context.read<CartCubit>();
+
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.shopping_bag_outlined,
+                        color: Color(0xFF004182),
+                        size: 26,
+                      ),
+                      onPressed: () {
+                        // الأكشن بتاعك هنا
+                      },
                     ),
-                  ),
+
+                    if (cartCubit.cartCount > 0)
+                      Positioned(
+                        top: 12,
+                        right: 10,
+                        child: Container(
+                          width: 8,
+                          height: 8,
+                          decoration: const BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
         ],
       ),

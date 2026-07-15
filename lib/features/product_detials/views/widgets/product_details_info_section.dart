@@ -5,6 +5,7 @@ import 'package:depi/features/product_detials/controller/product_details_cubit.d
 import 'package:depi/features/product_detials/views/widgets/timer_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:readmore/readmore.dart';
 
 class ProductDetailsInfo extends StatelessWidget {
   final Product product;
@@ -21,16 +22,17 @@ class ProductDetailsInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Center(
-          child: Text(
-            product.title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w700,
-              color: const Color(0xff06004F),
-              height: 1.4,
-            ),
+        Text(
+          product.title.split(' ').length > 4
+              ? '${product.title.split(' ').take(4).join(' ')}...'
+              : product.title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xff06004F),
+            height: 1.4,
           ),
         ),
 
@@ -175,14 +177,28 @@ class ProductDetailsInfo extends StatelessWidget {
 
         SizedBox(height: 33.h),
 
-        Text(
+        ReadMoreText(
           product.description.isNotEmpty
               ? product.description.replaceAll('\n', ' • ')
               : 'No description available',
+          trimLines: 3,
+          trimMode: TrimMode.Line,
+          trimCollapsedText: ' Show More',
+          trimExpandedText: ' Show Less',
           style: TextStyle(
             fontSize: 14.sp,
             color: Colors.grey.shade700,
             height: 1.6,
+          ),
+          moreStyle: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.bold,
+            color: const Color(0xff004182),
+          ),
+          lessStyle: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.bold,
+            color: const Color(0xff004182),
           ),
         ),
       ],

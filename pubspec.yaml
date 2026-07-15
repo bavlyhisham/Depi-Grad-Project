@@ -43,7 +43,7 @@ dependencies:
   http: ^1.2.2
   image: ^4.2.0
   shared_preferences: ^2.5.5
-
+  readmore: ^3.0.0
 
 dev_dependencies:
   flutter_test:

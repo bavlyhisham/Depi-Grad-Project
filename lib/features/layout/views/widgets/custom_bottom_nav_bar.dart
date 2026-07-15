@@ -28,6 +28,12 @@ class Custombottomnavbar extends StatelessWidget {
             if (cubit.currentindex == value) {
               return;
             }
+
+            // Wishlist و Settings لسه مش جاهزين
+            if (value == 2 || value == 3) {
+              return;
+            }
+
             cubit.changebottomstate(value);
           },
           items: [
@@ -42,7 +48,7 @@ class Custombottomnavbar extends StatelessWidget {
   }
 }
 
-BottomNavigationBarItem buildItem(IconData icon, int index, LayoutCubit cubit ) {
+BottomNavigationBarItem buildItem(IconData icon, int index, LayoutCubit cubit) {
   return BottomNavigationBarItem(
     label: '',
     icon: AnimatedContainer(

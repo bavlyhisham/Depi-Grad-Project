@@ -47,7 +47,9 @@ class Main extends StatelessWidget {
         BlocProvider(create: (context) => LayoutCubit()),
         BlocProvider(create: (context) => HomeCubit()..getProductData()),
         BlocProvider(create: (context) => AuthCubit(ApiService(Dio()))),
-        BlocProvider(create: (context) => CartCubit()),
+        BlocProvider(
+          create: (context) => CartCubit()..getCart(showLoading: false),
+        ),
       ],
       child: ScreenUtilInit(
         designSize: const Size(412, 924),
@@ -55,7 +57,7 @@ class Main extends StatelessWidget {
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: isLoggedIn ? const CartScreen() : const SignInView(),
+            home: isLoggedIn ? const Shoplayout() : const SignInView(),
           );
         },
       ),

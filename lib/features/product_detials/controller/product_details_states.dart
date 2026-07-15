@@ -7,3 +7,5 @@ class ProductDetailsFavoriteChangedState extends ProductDetailsStates {}
 class ProductDetailsTimerTickState extends ProductDetailsStates {}
 
 class ProductDetailsOfferExpiredState extends ProductDetailsStates {}
+
+class ProductDetailsCountChangedState extends ProductDetailsStates {}

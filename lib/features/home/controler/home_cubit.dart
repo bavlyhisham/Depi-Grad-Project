@@ -58,9 +58,18 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   void getProductData() {
+    print("getProductData called");
+
     emit(GetProductLoadingState());
+
     DioHelper.getData(url: '/api/v1/products')
         .then((value) {
+          print("Status Code: ${value.statusCode}");
+          print("Products Count: ${(value.data['data'] as List).length}");
+          print(
+            "First Image: ${(value.data['data'] as List).first['imageCover']}",
+          );
+
           products = (value.data['data'] as List)
               .map((e) => Product.fromJson(e))
               .toList();
@@ -68,7 +77,7 @@ class HomeCubit extends Cubit<HomeStates> {
           emit(GetProductdatasuccessful());
         })
         .catchError((e) {
-          print('GetPrdouctdataError $e');
+          print("GetProductDataError: $e");
           emit(GetProductError());
         });
   }
