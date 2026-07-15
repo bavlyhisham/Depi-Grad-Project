@@ -15,6 +15,7 @@ import 'package:depi/features/home/controler/home_cubit.dart';
 import 'package:depi/features/layout/controler/layout_cubit.dart';
 import 'package:depi/features/layout/views/shop_layout.dart';
 import 'package:depi/features/cart/controller/cart_cubit.dart';
+import 'package:depi/features/product_detials/views/product_details_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

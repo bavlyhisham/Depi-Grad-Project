@@ -1,10 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../controller/cart_cubit.dart';
 
-class CartItemCard extends StatelessWidget {
-  const CartItemCard({super.key, required this.product});
+class CartItemCard extends StatefulWidget {
+  final VoidCallback onDelete;
+  final Function(int) onQuantityChanged;
+  final dynamic product;
 
-  final Map<String, dynamic> product;
+  const CartItemCard({
+    super.key,
+    required this.product,
+    required this.onDelete,
+    required this.onQuantityChanged,
+  });
+
+  @override
+  State<CartItemCard> createState() => _CartItemCardState();
+}
+
+class _CartItemCardState extends State<CartItemCard> {
+  late int count;
+  late int stock;
+
+  @override
+  void initState() {
+    super.initState();
+
+    count = widget.product['count'];
+    stock = widget.product['product']['quantity'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +37,11 @@ class CartItemCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
       width: double.infinity,
       height: 120.h,
+
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20.r),
+
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.10),
@@ -24,12 +51,14 @@ class CartItemCard extends StatelessWidget {
           ),
         ],
       ),
+
       child: Row(
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(15.r),
+
             child: Image.network(
-              product['product']['imageCover'],
+              widget.product['product']['imageCover'],
               width: 93.w,
               height: 93.h,
               fit: BoxFit.cover,
@@ -41,11 +70,14 @@ class CartItemCard extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
                 Text(
-                  product['product']['title'],
+                  widget.product['product']['title'],
+
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
+
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 16.sp,
@@ -56,9 +88,8 @@ class CartItemCard extends StatelessWidget {
                 SizedBox(height: 4.h),
 
                 Text(
-                  product['product']['brand']['name'],
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                  widget.product['product']['brand']['name'],
+
                   style: TextStyle(
                     fontSize: 12.sp,
                     color: const Color(0xff9B9B9B),
@@ -68,7 +99,8 @@ class CartItemCard extends StatelessWidget {
                 SizedBox(height: 6.h),
 
                 Text(
-                  "EGP ${product['price']}",
+                  "EGP ${widget.product['price'] * count}",
+
                   style: TextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w700,
@@ -81,21 +113,66 @@ class CartItemCard extends StatelessWidget {
 
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
             children: [
-              Icon(Icons.close, color: const Color(0xff06004F), size: 25.sp),
+              GestureDetector(
+                onTap: widget.onDelete,
+
+                child: Icon(
+                  Icons.close,
+                  color: const Color(0xff06004F),
+                  size: 25.sp,
+                ),
+              ),
 
               Row(
                 children: [
-                  Image.asset(
-                    'assets/images/minus.png',
-                    width: 28.w,
-                    height: 28.h,
+                  GestureDetector(
+                    onTap: () {
+                      if (count > 1) {
+                        setState(() {
+                          count--;
+                        });
+                        widget.onQuantityChanged(widget.product['price']);
+
+                        context.read<CartCubit>().updateCartQuantity(
+                          widget.product['product']['id'],
+                          count,
+                          stock,
+                        );
+                      } else {
+                        widget.onDelete();
+                      }
+                    },
+
+                    child: Container(
+                      width: 28.w,
+                      height: 28.h,
+
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+
+                        color: Colors.white,
+
+                        border: Border.all(
+                          color: const Color(0xff004CFF),
+                          width: 1.5,
+                        ),
+                      ),
+
+                      child: Icon(
+                        Icons.remove,
+                        color: const Color(0xff004CFF),
+                        size: 18.sp,
+                      ),
+                    ),
                   ),
 
                   SizedBox(width: 10.w),
 
                   Text(
-                    "${product['count']}",
+                    "$count",
+
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w900,
@@ -104,10 +181,34 @@ class CartItemCard extends StatelessWidget {
 
                   SizedBox(width: 10.w),
 
-                  Image.asset(
-                    'assets/images/plus.png',
-                    width: 28.w,
-                    height: 28.h,
+                  GestureDetector(
+                    onTap: () {
+                      if (count < stock) {
+                        setState(() {
+                          count++;
+                        });
+                        widget.onQuantityChanged(widget.product['price']);
+
+                        context.read<CartCubit>().updateCartQuantity(
+                          widget.product['product']['id'],
+                          count,
+                          stock,
+                        );
+                      }
+                    },
+
+                    child: Container(
+                      width: 28.w,
+                      height: 28.h,
+
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+
+                        color: const Color(0xff004CFF),
+                      ),
+
+                      child: Icon(Icons.add, color: Colors.white, size: 18.sp),
+                    ),
                   ),
                 ],
               ),

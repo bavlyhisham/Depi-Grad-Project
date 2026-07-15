@@ -2,8 +2,9 @@
 
 import 'package:depi/features/cart/controller/cart_cubit.dart';
 import 'package:depi/features/cart/controller/cart_states.dart';
-import 'package:depi/features/cart/views/widgets/cart_item_card.dart';
 import 'package:depi/features/cart/views/widgets/cart_items_list.dart';
+import 'package:depi/features/cart/views/widgets/cart_summary.dart';
+import 'package:depi/features/cart/views/widgets/promo_code_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +17,11 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  int discount = 0;
+
+  List products = [];
+  double totalPrice = 0;
+
   @override
   void initState() {
     super.initState();
@@ -36,193 +42,131 @@ class _CartScreenState extends State<CartScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Color(0xFF004182),
+            size: 25,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           'Shopping Bag',
           style: TextStyle(
-            color: Colors.black,
+            color: const Color(0xFF004182),
             fontSize: 20.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
+        // آيكون الشنطة والنقطة الحمراء ثابتة علطول
+        actions: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.shopping_bag_outlined,
+                    color: Color(0xFF004182),
+                    size: 26,
+                  ),
+                  onPressed: () {
+                    // الأكشن بتاعك هنا
+                  },
+                ),
+                // النقطة الحمراء دايماً موجودة
+                Positioned(
+                  top: 12,
+                  right: 10,
+                  child: Container(
+                    width: 8,
+                    height: 8,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
-
       body: BlocBuilder<CartCubit, CartStates>(
         builder: (context, state) {
-          if (state is CartLoadingState) {
+          if (state is CartLoadingState && products.isEmpty) {
             return const Center(child: CircularProgressIndicator());
           }
 
           if (state is CartLoadedState) {
-            final products = state.cartData['data']['products'];
-
-            final totalPrice = state.cartData['data']['totalCartPrice'];
-
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 23.h),
-
-              child: Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          CartItemsList(products: products),
-
-                          SizedBox(height: 40.h),
-
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.w),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TextField(
-                                    decoration: const InputDecoration(
-                                      hintText: "Promo Code",
-                                      border: InputBorder.none,
-                                    ),
-                                  ),
-                                ),
-
-                                SizedBox(width: 12.w),
-
-                                SizedBox(
-                                  width: 88.w,
-                                  height: 33.h,
-
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xff004CFF),
-                                      elevation: 0,
-                                      padding: EdgeInsets.zero,
-
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          14.r,
-                                        ),
-                                      ),
-                                    ),
-
-                                    child: Text(
-                                      "Apply",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          SizedBox(height: 19.h),
-
-                          Container(
-                            padding: EdgeInsets.all(16.r),
-
-                            decoration: BoxDecoration(
-                              color: const Color(0xffF8F9FB),
-                              borderRadius: BorderRadius.circular(18.r),
-                            ),
-
-                            child: Column(
-                              children: [
-                                _summaryRow('Subtotal', 'EGP $totalPrice'),
-
-                                SizedBox(height: 10.h),
-
-                                _summaryRow('Shipping', 'EGP 50'),
-
-                                Divider(height: 24.h),
-
-                                _summaryRow(
-                                  'Total',
-                                  'EGP ${totalPrice + 50}',
-                                  isTotal: true,
-                                ),
-
-                                SizedBox(height: 18.h),
-
-                                SizedBox(
-                                  width: double.infinity,
-                                  height: 52.h,
-
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xff004CFF),
-
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          14.r,
-                                        ),
-                                      ),
-                                    ),
-
-                                    child: Text(
-                                      'Checkout',
-
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
+            products = state.cartData['data']['products'];
+            totalPrice = state.cartData['data']['totalCartPrice'].toDouble();
           }
 
-          if (state is CartErrorState) {
-            return Center(child: Text(state.error));
+          if (products.isEmpty) {
+            return const Center(child: Text("Your cart is empty"));
+          }
+
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 23.h),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  CartItemsList(
+                    products: products,
+
+                    onDelete: (index) {
+                      final productId = products[index]['product']['_id'];
+
+                      setState(() {
+                        totalPrice -=
+                            products[index]['price'] * products[index]['count'];
+
+                        products.removeAt(index);
+                      });
+
+                      context.read<CartCubit>().removeFromCart(productId);
+                    },
+
+                    onQuantityChanged: (priceChange) {
+                      setState(() {
+                        totalPrice += priceChange;
+                      });
+                    },
+                  ),
+
+                  SizedBox(height: 40.h),
+
+                  PromoCodeSection(
+                    onApply: (value) {
+                      setState(() {
+                        discount = value;
+                      });
+                    },
+                  ),
+
+                  SizedBox(height: 19.h),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+
+      bottomNavigationBar: BlocBuilder<CartCubit, CartStates>(
+        builder: (context, state) {
+          if (state is CartLoadedState) {
+            final total = state.cartData['data']['totalCartPrice'].toDouble();
+
+            return CartSummary(totalPrice: total, discount: discount);
           }
 
           return const SizedBox();
         },
       ),
-    );
-  }
-
-  static Widget _summaryRow(
-    String title,
-    String value, {
-    bool isTotal = false,
-  }) {
-    return Row(
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: isTotal ? 16.sp : 14.sp,
-            fontWeight: isTotal ? FontWeight.w700 : FontWeight.w500,
-            color: const Color(0xff06004F),
-          ),
-        ),
-
-        const Spacer(),
-
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: isTotal ? 17.sp : 14.sp,
-            fontWeight: FontWeight.w700,
-            color: const Color(0xff06004F),
-          ),
-        ),
-      ],
     );
   }
 }

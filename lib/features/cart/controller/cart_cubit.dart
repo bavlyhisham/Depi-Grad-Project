@@ -8,8 +8,8 @@ import 'cart_states.dart';
 class CartCubit extends Cubit<CartStates> {
   CartCubit() : super(CartInitialState());
 
+  // Add Product To Cart
   Future<void> addToCart(String productId) async {
-    print("Add To Cart Pressed");
     emit(CartLoadingState());
 
     try {
@@ -22,7 +22,7 @@ class CartCubit extends Cubit<CartStates> {
         data: {"productId": productId},
       );
 
-      emit(CartSuccessState());
+      await getCart();
     } on DioException catch (e) {
       emit(
         CartErrorState(e.response?.data['message'] ?? 'Something went wrong'),
@@ -32,8 +32,11 @@ class CartCubit extends Cubit<CartStates> {
     }
   }
 
-  Future<void> getCart() async {
-    emit(CartLoadingState());
+  // Get Cart
+  Future<void> getCart({bool showLoading = true}) async {
+    if (showLoading) {
+      emit(CartLoadingState());
+    }
 
     try {
       String token = CacheHelper.getData(key: 'token');
@@ -42,9 +45,59 @@ class CartCubit extends Cubit<CartStates> {
 
       final response = await DioHelper.getData(url: '/api/v1/cart');
 
-      print(response.data);
-
       emit(CartLoadedState(response.data));
+    } on DioException catch (e) {
+      emit(
+        CartErrorState(e.response?.data['message'] ?? 'Something went wrong'),
+      );
+    } catch (e) {
+      emit(CartErrorState(e.toString()));
+    }
+  }
+
+  // Remove Product From Cart
+  Future<void> removeFromCart(String productId) async {
+    try {
+      String token = CacheHelper.getData(key: 'token');
+
+      DioHelper.setToken(token);
+
+      await DioHelper.deleteData(url: '/api/v1/cart/$productId');
+
+      await getCart(showLoading: false);
+    } on DioException catch (e) {
+      emit(
+        CartErrorState(e.response?.data['message'] ?? 'Something went wrong'),
+      );
+    } catch (e) {
+      emit(CartErrorState(e.toString()));
+    }
+  }
+
+  // Update Product Quantity
+  Future<void> updateCartQuantity(
+    String productId,
+    int count,
+    int stock,
+  ) async {
+    if (count > stock) {
+      emit(CartErrorState("You can't add more than available stock"));
+      return;
+    }
+
+    if (count < 1) return;
+
+    try {
+      String token = CacheHelper.getData(key: 'token');
+
+      DioHelper.setToken(token);
+
+      await DioHelper.putData(
+        url: '/api/v1/cart/$productId',
+        data: {"count": count},
+      );
+
+      await getCart(showLoading: false);
     } on DioException catch (e) {
       emit(
         CartErrorState(e.response?.data['message'] ?? 'Something went wrong'),
