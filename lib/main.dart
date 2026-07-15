@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, unused_import
+
 
 import 'dart:developer';
 
@@ -16,6 +16,7 @@ import 'package:depi/features/layout/controler/layout_cubit.dart';
 import 'package:depi/features/layout/views/shop_layout.dart';
 import 'package:depi/features/cart/controller/cart_cubit.dart';
 import 'package:depi/features/product_detials/views/product_details_screen.dart';
+import 'package:depi/features/wishlist/controller/wishlist_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,6 +49,7 @@ class Main extends StatelessWidget {
         BlocProvider(create: (context) => HomeCubit()..getProductData()),
         BlocProvider(create: (context) => AuthCubit(ApiService(Dio()))),
         BlocProvider(create: (context) => CartCubit()),
+        BlocProvider(create: (context) => WishlistCubit()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(412, 924),
