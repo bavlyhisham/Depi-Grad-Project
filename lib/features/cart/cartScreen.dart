@@ -2,9 +2,27 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:depi/features/cart/controller/cart_cubit.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    print("Cart Screen Opened");
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CartCubit>().getCart();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -7,6 +7,7 @@ import 'package:depi/features/product_detials/controller/product_details_states.
 import 'package:depi/features/product_detials/views/widgets/product_actions_section.dart';
 import 'package:depi/features/product_detials/views/widgets/product_details_image_section.dart';
 import 'package:depi/features/product_detials/views/widgets/product_details_info_section.dart';
+import 'package:depi/features/cart/controller/cart_cubit.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   final Product product;
@@ -82,7 +83,11 @@ class ProductDetailsScreen extends StatelessWidget {
 
                   SizedBox(height: 24.h),
 
-                  const ProductDetailsActions(),
+                  ProductDetailsActions(
+                    onAddToCart: () {
+                      context.read<CartCubit>().addToCart(product.id);
+                    },
+                  ),
 
                   SizedBox(height: 20.h),
                 ],

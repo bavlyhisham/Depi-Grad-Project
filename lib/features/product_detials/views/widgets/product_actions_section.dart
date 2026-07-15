@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductDetailsActions extends StatelessWidget {
-  const ProductDetailsActions({super.key});
+  const ProductDetailsActions({super.key, required this.onAddToCart});
+
+  final VoidCallback onAddToCart;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class ProductDetailsActions extends StatelessWidget {
           child: SizedBox(
             height: 52.h,
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: onAddToCart,
               style: OutlinedButton.styleFrom(
                 side: const BorderSide(color: Color(0xff004CFF), width: 1.5),
                 shape: RoundedRectangleBorder(
@@ -35,7 +37,9 @@ class ProductDetailsActions extends StatelessWidget {
           child: SizedBox(
             height: 52.h,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                // هنعملها بعدين
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xff004CFF),
                 elevation: 0,

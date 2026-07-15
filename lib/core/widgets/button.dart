@@ -1,22 +1,23 @@
-// ignore_for_file: dead_code, dead_null_aware_expression, must_be_immutable
+// ignore_for_file: dead_code, dead_null_aware_expressions, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DefaultButton extends StatelessWidget {
-  DefaultButton({
-    this.buttontitle = "",
-    this.foregoundcolor,
-    this.backgroundcolor,
-    required this.onPressed,
-    required this.fontSize,
+  final String buttontitle;
+  final Color? backgroundcolor;
+  final Color? foregoundcolor;
+  final void Function()? onPressed;
+  final double? fontSize;
+
+  const DefaultButton({
     super.key,
+    this.buttontitle = "",
+    this.backgroundcolor = Colors.blue,
+    this.foregoundcolor = Colors.white,
+    required this.onPressed,
+    this.fontSize,
   });
-  String buttontitle;
-  Color? backgroundcolor = Colors.blue;
-  Color? foregoundcolor = Colors.blue;
-  void Function()? onPressed;
-  double fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +26,12 @@ class DefaultButton extends StatelessWidget {
       height: 60.h,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          animationDuration: Duration(milliseconds: 400),
-
+          animationDuration: const Duration(milliseconds: 400),
           elevation: 3.r,
           backgroundColor: backgroundcolor,
           foregroundColor: foregoundcolor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadiusGeometry.circular(15.r),
+            borderRadius: BorderRadius.circular(15.r),
           ),
         ),
         onPressed: onPressed,
