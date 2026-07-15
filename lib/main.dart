@@ -4,36 +4,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// Imports الخاصة بمشروعك
-import 'package:depi/core/blocObserver/blocObsever.dart'; 
+// Imports الخاصة بمشروع التيم
+import 'package:depi/core/blocObserver/blocObsever.dart';
 import 'package:depi/core/networks/remote/dio_helper.dart';
-import 'package:depi/core/cash/cache_helper.dart'; 
+import 'package:depi/core/cash/cache_helper.dart';
 import 'package:depi/features/auth/manager/auth_cubit.dart';
 import 'package:depi/features/auth/presentation/views/sign_in_view.dart';
 import 'package:depi/features/home/controler/home_cubit.dart';
 import 'package:depi/features/layout/controler/layout_cubit.dart';
+import 'features/layout/views/shop_layout.dart';
 
+// Imports الخاصة بالـ Onboarding
+import 'package:depi/features/onboarding/onboarding_screen.dart';
 
-import 'features/layout/views/shop_layout.dart'; 
-
-void main() async { 
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Bloc.observer = MyBlocObserver();
 
-  await CacheHelper.init(); 
+  await CacheHelper.init();
 
   DioHelper.init();
 
+  // التشيك الخاص بالـ Onboarding
+  bool showOnboarding = CacheHelper.getData(key: 'showOnboarding') ?? true;
   bool isLoggedIn = CacheHelper.getData(key: 'isLoggedIn') ?? false;
 
-  runApp(Main(isLoggedIn: isLoggedIn));
+  runApp(Main(isLoggedIn: isLoggedIn, showOnboarding: showOnboarding));
 }
 
 class Main extends StatelessWidget {
   final bool isLoggedIn;
-  
-  const Main({super.key, required this.isLoggedIn}); 
+  final bool showOnboarding;
+
+  const Main({
+    super.key,
+    required this.isLoggedIn,
+    required this.showOnboarding,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +57,10 @@ class Main extends StatelessWidget {
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: isLoggedIn ? const Shoplayout() : const SignInView(), 
+
+            home: true   //showOnboarding
+                ? OnboardingScreen()
+                : (isLoggedIn ? const Shoplayout() : const SignInView()),
           );
         },
       ),
