@@ -1,3 +1,4 @@
+import 'package:depi/features/cart/views/cartScreen.dart';
 import 'package:depi/features/category/views/category_screen.dart';
 import 'package:depi/features/home/views/home_screen.dart';
 import 'package:depi/features/layout/controler/layout_states.dart';
@@ -5,7 +6,6 @@ import 'package:depi/features/setting/views/setting_screen.dart';
 import 'package:depi/features/wishlist/views/wish_list_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:depi/features/cart/cartScreen.dart';
 
 class LayoutCubit extends Cubit<LayoutStates> {
   LayoutCubit() : super(LayoutIntitialState());

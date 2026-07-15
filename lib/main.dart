@@ -9,8 +9,8 @@ import 'package:depi/core/networks/remote/dio_helper.dart';
 
 import 'package:depi/features/auth/manager/auth_cubit.dart';
 import 'package:depi/features/auth/presentation/views/sign_in_view.dart';
+import 'package:depi/features/cart/views/cartScreen.dart';
 
-import 'package:depi/features/cart/cartScreen.dart';
 import 'package:depi/features/home/controler/home_cubit.dart';
 import 'package:depi/features/layout/controler/layout_cubit.dart';
 import 'package:depi/features/layout/views/shop_layout.dart';
