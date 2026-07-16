@@ -13,8 +13,8 @@ class SettingScreen extends StatelessWidget {
       key: 'isLoggedIn',
       value: false,
     );
+    
 
-    // الانتقال إلى صفحة تسجيل الدخول
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
