@@ -3,6 +3,8 @@ import 'package:depi/features/cart/controller/cart_states.dart';
 import 'package:depi/features/cart/views/cartScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CartBadge extends StatelessWidget {
   const CartBadge({super.key});
@@ -28,11 +30,14 @@ class CartBadge extends StatelessWidget {
           child: Stack(
             clipBehavior: Clip.none,
             children: [
-              const Icon(
-                Icons.shopping_cart_outlined,
-                size: 28,
-                color: Color(0xff004182),
-              ),
+              Padding(
+                        padding: const EdgeInsets.all(7),
+                        child: SvgPicture.asset(
+                          'assets/svgs/shopingcart.svg',
+                          height: 25.h,
+                          width: 25.w,
+                        ),
+                      ),
 
               if (count > 0)
                 Positioned(

@@ -1,10 +1,11 @@
-// ignore_for_file: unused_import
-
 import 'package:depi/core/widgets/textformfiled.dart';
+import 'package:depi/features/cart/controller/cart_cubit.dart';
+import 'package:depi/features/cart/controller/cart_states.dart';
+import 'package:depi/features/cart/views/cartScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Searchtap extends StatelessWidget {
   const Searchtap({
@@ -39,65 +40,71 @@ class Searchtap extends StatelessWidget {
                   width: 24.w,
                 ),
               ),
-
               borderredius: 25.r,
-
-              enableBorderColor: Color(0xff004182),
+              enableBorderColor: const Color(0xff004182),
             ),
           ),
           SizedBox(width: 10.w),
-          // Material(
-          //   color: Colors.white,
-          //   shape: const CircleBorder(),
-          //   child: BlocBuilder<CartCubit, CartStates>(
-          //   builder: (context, state) {
-          //     var cartCubit = CartCubit.get(context);
-          //     int cartItemCount = cartCubit.cartProducts.length?? 0;
-          //     return Stack(
-          //       children: [
-          //         InkWell(
-          //           customBorder: const CircleBorder(),
-          //           onTap: () {
-          //             Navigator.push(
-          //               context,
-          //               MaterialPageRoute(builder: (context) => Cartscreen()),
-          //             );
-          //           },
-          //           child: Padding(
-          //             padding: const EdgeInsets.all(12),
-          //             child: SvgPicture.asset(
-          //               'assets/svgs/shopingcart.svg',
-          //               height: 25.h,
-          //               width: 25.w,
-          //             ),
-          //           ),
-          //         ),
-          //         if (cartItemCount > 0)
-          //           Positioned(
-          //             right: 0,
-          //             top: 0,
-          //             child: Container(
-          //               padding: EdgeInsets.all(4.r),
-          //               decoration: BoxDecoration(
+          Material(
+            color: Colors.white,
+            shape: const CircleBorder(),
+            child: BlocBuilder<CartCubit, CartStates>(
+              builder: (context, state) {
+                final cubit = context.read<CartCubit>();
 
-          //                 shape: BoxShape.circle,
-          //               ),
-          //               child: Text(
-          //                 '$cartItemCount',
-          //                 style: TextStyle(
-          //                   color: Colors.white,
-          //                   fontSize: 12.sp,
-          //                   fontWeight: FontWeight.bold,
-          //                 ),
-          //               ),
-          //             ),
-          //           ),
-          //       ],
-          //     );
-
-          //   },
-          //   ),
-          // ),
+                return Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    InkWell(
+                      customBorder: const CircleBorder(),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const CartScreen(),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: SvgPicture.asset(
+                          'assets/svgs/shopingcart.svg',
+                          height: 25.h,
+                          width: 25.w,
+                        ),
+                      ),
+                    ),
+                    if (cubit.cartCount > 0)
+                      Positioned(
+                        right: -2,
+                        top: -2,
+                        child: Container(
+                          padding: EdgeInsets.all(5.r),
+                          decoration: const BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                          ),
+                          constraints: BoxConstraints(
+                            minWidth: 18.w,
+                            minHeight: 18.h,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${cubit.cartCount}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

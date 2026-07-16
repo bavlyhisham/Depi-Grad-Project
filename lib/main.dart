@@ -1,4 +1,5 @@
- import 'dart:developer';
+import 'dart:developer';
+import 'package:depi/features/category/controler/category_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,9 +47,14 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => LayoutCubit()),
-        BlocProvider(create: (context) => HomeCubit()..getProductData()),
         BlocProvider(create: (context) => AuthCubit(ApiService(Dio()))),
+
+        BlocProvider(create: (context) => LayoutCubit()),
+
+        BlocProvider(create: (context) => HomeCubit()..getProductData()),
+
+        BlocProvider(create: (context) => CategoryCubit()..getCategorData()),
+
         BlocProvider(create: (context) => WishlistCubit()),
         BlocProvider(
           create: (context) => CartCubit()..getCart(showLoading: false),
@@ -60,8 +66,8 @@ class Main extends StatelessWidget {
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home:true
-             // showOnboarding
+            home: true
+                // showOnboarding
                 ? const OnboardingScreen()
                 : (isLoggedIn ? const Shoplayout() : const SignInView()),
           );

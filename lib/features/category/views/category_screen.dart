@@ -103,20 +103,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 children: [
                   Expanded(child: const Searchtap()),
                   const SizedBox(width: 12),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const CartScreen()),
-                      );
-                    },
-                    child: SvgPicture.asset(
-                      'assets/svgs/shopingcart.svg',
-                      width: 24,
-                      height: 24,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+                
                 ],
               ),
               const SizedBox(height: 16),

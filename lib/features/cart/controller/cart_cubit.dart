@@ -8,6 +8,7 @@ import 'cart_states.dart';
 class CartCubit extends Cubit<CartStates> {
   CartCubit() : super(CartInitialState());
 
+  Map<String, bool> loadingProducts = {};
   // Cart Data
   Map<String, dynamic>? cartData;
 
@@ -19,40 +20,48 @@ class CartCubit extends Cubit<CartStates> {
   List get products => cartData?['data']?['products'] ?? [];
 
   // Add Product To Cart
-  Future<void> addToCart(String productId, int count, int stock) async {
-    if (count > stock) {
-      emit(CartErrorState("You can't add more than available stock"));
-      return;
-    }
-
-    emit(CartLoadingState());
-
-    try {
-      String token = CacheHelper.getData(key: 'token');
-
-      DioHelper.setToken(token);
-
-      // Add product
-      await DioHelper.postData(
-        url: '/api/v1/cart',
-        data: {"productId": productId},
-      );
-
-      // Update quantity
-      await DioHelper.putData(
-        url: '/api/v1/cart/$productId',
-        data: {"count": count},
-      );
-
-      await getCart();
-    } on DioException catch (e) {
-      emit(
-        CartErrorState(e.response?.data['message'] ?? 'Something went wrong'),
-      );
-    } catch (e) {
-      emit(CartErrorState(e.toString()));
-    }
+Future<void> addToCart(String productId, int count, int stock) async {
+  if (count > stock) {
+    emit(CartErrorState("You can't add more than available stock"));
+    return;
   }
+
+  loadingProducts[productId] = true;
+  emit(CartLoadingState());
+
+  try {
+    String token = CacheHelper.getData(key: 'token');
+
+    DioHelper.setToken(token);
+
+    await DioHelper.postData(
+      url: '/api/v1/cart',
+      data: {
+        "productId": productId,
+      },
+    );
+
+    await DioHelper.putData(
+      url: '/api/v1/cart/$productId',
+      data: {
+        "count": count,
+      },
+    );
+
+    await getCart(showLoading: false);
+  } on DioException catch (e) {
+    emit(
+      CartErrorState(
+        e.response?.data['message'] ?? 'Something went wrong',
+      ),
+    );
+  } catch (e) {
+    emit(CartErrorState(e.toString()));
+  } finally {
+    loadingProducts[productId] = false;
+    emit(CartLoadedState(cartData ?? {}));
+  }
+}
 
   // Get Cart
   Future<void> getCart({bool showLoading = true}) async {
