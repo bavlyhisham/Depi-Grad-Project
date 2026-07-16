@@ -25,7 +25,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     
-    List<String> topTitles = ["Borcelle", "Borcelle", "Borcelle"];
+    
+    List<String> topTitles = ["store", "Store", "Store"]; 
     List<String> topDescriptions = [
       "Your favorite online store",
       "Best shopping experience",
@@ -62,6 +63,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               bool isBluePage = (index != 1);
               Color topColor = isBluePage ? Colors.white : Colors.blue.shade900;
               Color descColor = isBluePage ? Colors.white70 : Colors.blueGrey;
+              
+              // تحديد لون العنوان العلوي: أزرق في الصفحة الثانية، وأبيض في غيرها
+              Color titleColor = (index == 1) ? Colors.blue.shade900 : Colors.white;
 
               return Column(
                 children: [
@@ -74,7 +78,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         children: [
                           Image.asset('assets/images/logo.png', height: 40, color: topColor),
                           const SizedBox(height: 5),
-                          Text(topTitles[index], style: TextStyle(color: topColor, fontSize: 24, fontWeight: FontWeight.bold)),
+                          // استخدام اللون الجديد هنا
+                          Text(topTitles[index], style: TextStyle(color: titleColor, fontSize: 24, fontWeight: FontWeight.bold)),
                           Text(topDescriptions[index], style: TextStyle(color: descColor, fontSize: 16)),
                         ],
                       ),
@@ -108,7 +113,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               );
             },
           ),
-          
           
           if (_currentIndex >= 1)
             Positioned(
