@@ -1,4 +1,3 @@
-import 'package:depi/features/cart/views/cartScreen.dart';
 import 'package:depi/features/category/views/category_screen.dart';
 import 'package:depi/features/home/views/home_screen.dart';
 import 'package:depi/features/layout/controler/layout_states.dart';
@@ -14,7 +13,6 @@ class LayoutCubit extends Cubit<LayoutStates> {
   List<Widget> bottomscreens = [
     Homescreen(),
     CategoryScreen(),
-    CartScreen(),
     WishListScreen(),
     SettingScreen(),
   ];

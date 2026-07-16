@@ -1,4 +1,5 @@
 import 'package:depi/core/networks/remote/product_model.dart';
+import 'package:depi/features/cart/controller/cart_cubit.dart';
 import 'package:depi/features/wishlist/controller/wishlist_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,7 +69,9 @@ class WishListCard extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            context.read<WishlistCubit>().toggleWishlist(product);
+                            context.read<WishlistCubit>().toggleWishlist(
+                              product,
+                            );
                           },
                           child: Container(
                             padding: EdgeInsets.all(6.r),
@@ -140,7 +143,24 @@ class WishListCard extends StatelessWidget {
                         SizedBox(
                           height: 38.h,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.read<CartCubit>().addToCart(
+                                product.id,
+                                1,
+                                product.quantity,
+                              );
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    '${product.title} added to cart!',
+                                    style: TextStyle(fontSize: 14.sp),
+                                  ),
+                                  backgroundColor: Colors.green,
+                                  duration: const Duration(seconds: 1),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xff004182),
                               shape: RoundedRectangleBorder(

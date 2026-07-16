@@ -53,19 +53,20 @@ class _PromoCodeSectionState extends State<PromoCodeSection> {
             child: ElevatedButton(
               onPressed: applyPromo,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 3, 54, 182),
+                backgroundColor: const Color(0xFF004182),
                 elevation: 0,
                 padding: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14.r),
+                  borderRadius: BorderRadius.circular(16.r),
+                  side: const BorderSide(color: Color(0xff06004F), width: 1.2),
                 ),
               ),
               child: Text(
                 "Apply",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
@@ -74,4 +75,4 @@ class _PromoCodeSectionState extends State<PromoCodeSection> {
       ),
     );
   }
-}
+  }

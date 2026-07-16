@@ -14,6 +14,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsStates> {
   final Product product;
 
   bool isFavorite = false;
+  int count = 1;
 
   int hours = 1;
   int minutes = 0;
@@ -45,6 +46,25 @@ class ProductDetailsCubit extends Cubit<ProductDetailsStates> {
   void toggleFavorite() {
     isFavorite = !isFavorite;
     emit(ProductDetailsFavoriteChangedState());
+  }
+
+  void syncCount(int newCount) {
+    count = newCount;
+    emit(ProductDetailsCountChangedState());
+  }
+
+  void increaseCount() {
+    if (count < product.quantity) {
+      count++;
+      emit(ProductDetailsTimerTickState());
+    }
+  }
+
+  void decreaseCount() {
+    if (count > 1) {
+      count--;
+      emit(ProductDetailsTimerTickState());
+    }
   }
 
   void _startOfferTimer() {

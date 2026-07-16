@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:depi/features/cart/views/widgets/order_confirmation_dialog.dart';
+import 'package:depi/features/cart/views/checkout_screen.dart';
 
 class CartSummary extends StatelessWidget {
   final double totalPrice;
@@ -17,7 +18,8 @@ class CartSummary extends StatelessWidget {
     print("CartSummary totalPrice = $totalPrice");
 
     double discountValue = (totalPrice * discount) / 100;
-    double finalTotal = totalPrice - discountValue + 50;
+    double shipping = totalPrice > 0 ? 50 : 0;
+    double finalTotal = totalPrice - discountValue + shipping;
 
     return Container(
       padding: EdgeInsets.all(16.r),
@@ -42,7 +44,7 @@ class CartSummary extends StatelessWidget {
 
           SizedBox(height: 10.h),
 
-          _summaryRow('Shipping', 'EGP 50'),
+          _summaryRow('Shipping', 'EGP ${shipping.toStringAsFixed(0)}'),
 
           Divider(height: 24.h),
 
@@ -59,11 +61,26 @@ class CartSummary extends StatelessWidget {
             height: 52.h,
             child: ElevatedButton(
               onPressed: () {
-                showOrderConfirmationDialog(
+                if (totalPrice <= 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Please add at least one product to your cart',
+                      ),
+                    ),
+                  );
+                  return;
+                }
+
+                Navigator.push(
                   context,
-                  subtotal: totalPrice,
-                  discount: discountValue,
-                  total: finalTotal,
+                  MaterialPageRoute(
+                    builder: (_) => CheckoutScreen(
+                      subtotal: totalPrice,
+                      discount: discountValue,
+                      shipping: shipping,
+                    ),
+                  ),
                 );
               },
 

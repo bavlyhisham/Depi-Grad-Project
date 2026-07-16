@@ -1,4 +1,7 @@
 import 'package:depi/features/wishlist/controller/wishlist_cubit.dart';
+import 'package:depi/features/cart/controller/cart_states.dart';
+import 'package:depi/features/cart/views/cartScreen.dart';
+import 'package:depi/features/cart/views/widgets/cart_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,9 +44,31 @@ class ProductDetailsScreen extends StatelessWidget {
               actions: [
                 Padding(
                   padding: EdgeInsets.only(right: 16.w),
-                  child: Icon(
-                    Icons.shopping_cart_outlined,
-                    color: const Color(0xff004182),
+                  child: InkWell(
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const CartScreen()),
+                      );
+
+                      final cartCubit = context.read<CartCubit>();
+
+                      final products = cartCubit.products;
+
+                      final item = products
+                          .cast<Map<String, dynamic>>()
+                          .firstWhere(
+                            (e) => e['product']['_id'] == product.id,
+                            orElse: () => {},
+                          );
+
+                      if (item.isNotEmpty) {
+                        cubit.syncCount(item['count']);
+                      } else {
+                        cubit.syncCount(1);
+                      }
+                    },
+                    child: const CartBadge(),
                   ),
                 ),
               ],
@@ -90,10 +115,23 @@ class ProductDetailsScreen extends StatelessWidget {
                   ProductDetailsInfo(product: product, cubit: cubit),
 
                   SizedBox(height: 24.h),
-
                   ProductDetailsActions(
+                    count: cubit.count,
+
+                    onIncrease: () {
+                      cubit.increaseCount();
+                    },
+
+                    onDecrease: () {
+                      cubit.decreaseCount();
+                    },
+
                     onAddToCart: () {
-                      context.read<CartCubit>().addToCart(product.id);
+                      context.read<CartCubit>().addToCart(
+                        product.id,
+                        cubit.count,
+                        product.quantity,
+                      );
                     },
                   ),
 

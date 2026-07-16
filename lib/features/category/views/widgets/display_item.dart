@@ -1,7 +1,10 @@
 import 'package:depi/core/networks/remote/product_model.dart';
+import 'package:depi/features/cart/controller/cart_cubit.dart';
 import 'package:depi/features/product_detials/views/product_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product});
@@ -44,19 +47,16 @@ class ProductCard extends StatelessWidget {
                     topLeft: Radius.circular(13.r),
                     topRight: Radius.circular(13.r),
                   ),
-                  child: Image.network(
-                    product.imagecover,
+                  child: CachedNetworkImage(
+                    imageUrl: product.imagecover,
                     height: 175.h,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    loadingBuilder: (context, child, progress) {
-                      if (progress == null) return child;
-                      return SizedBox(
-                        height: 175.h,
-                        child: const Center(child: CircularProgressIndicator()),
-                      );
-                    },
-                    errorBuilder: (context, error, stackTrace) => SizedBox(
+                    placeholder: (context, url) => SizedBox(
+                      height: 175.h,
+                      child: const Center(child: CircularProgressIndicator()),
+                    ),
+                    errorWidget: (context, url, error) => SizedBox(
                       height: 175.h,
                       child: const Center(
                         child: Icon(
@@ -67,7 +67,6 @@ class ProductCard extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 if (hasDiscount)
                   Positioned(
                     top: 0,
@@ -79,7 +78,6 @@ class ProductCard extends StatelessWidget {
                   ),
               ],
             ),
-
             Padding(
               padding: EdgeInsets.only(
                 left: 8.w,
@@ -100,9 +98,7 @@ class ProductCard extends StatelessWidget {
                       color: const Color(0xff06004F),
                     ),
                   ),
-
                   SizedBox(height: 5.h),
-
                   hasDiscount
                       ? Row(
                           children: [
@@ -133,20 +129,16 @@ class ProductCard extends StatelessWidget {
                             color: const Color(0xff06004F),
                           ),
                         ),
-
                   SizedBox(height: 5.h),
-
                   Row(
                     children: [
-                      Expanded(
-                        child: Text(
-                          'Review (${product.ratingsAverage})',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: const Color(0xff06004F),
-                            fontSize: 14.sp,
-                          ),
+                      Text(
+                        'Review (${product.ratingsAverage})',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: const Color(0xff06004F),
+                          fontSize: 14.sp,
                         ),
                       ),
                       SizedBox(width: 2.w),
@@ -156,20 +148,39 @@ class ProductCard extends StatelessWidget {
                         color: const Color(0xFFFDD835),
                       ),
                       const Spacer(),
-
                       SizedBox(
                         width: 30.w,
                         height: 30.h,
-                        child: IconButton(
-                          onPressed: () {},
-                          style: IconButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            backgroundColor: const Color(0xff004182),
-                          ),
-                          icon: Icon(
-                            Icons.add,
-                            size: 22.sp,
-                            color: Colors.white,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            context.read<CartCubit>().addToCart(
+                              product.id,
+                              1,
+                              product.quantity,
+                            );
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  '${product.title} added to cart!',
+                                  style: TextStyle(fontSize: 14.sp),
+                                ),
+                                backgroundColor: Colors.green,
+                                duration: const Duration(seconds: 1),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: Color(0xff004182),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.add,
+                              size: 20.sp,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),

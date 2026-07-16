@@ -17,18 +17,14 @@ class CartItemsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
       itemCount: products.length,
       separatorBuilder: (_, index) => SizedBox(height: 12.h),
       itemBuilder: (_, index) {
         return CartItemCard(
           product: products[index],
-
           onDelete: () {
             onDelete(index);
           },
-
           onQuantityChanged: onQuantityChanged,
         );
       },
