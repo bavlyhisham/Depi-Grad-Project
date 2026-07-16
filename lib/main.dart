@@ -1,9 +1,14 @@
 import 'dart:developer';
+<<<<<<< Updated upstream
 import 'package:depi/core/blocObserver/blocObsever.dart';
 import 'package:depi/core/networks/remote/dio_helper.dart';
 import 'package:depi/features/home/controler/home_cubit.dart';
 import 'package:depi/features/layout/controler/layout_cubit.dart';
 import 'package:depi/features/layout/views/shop_layout.dart';
+=======
+import 'package:depi/features/category/controler/category_cubit.dart';
+import 'package:dio/dio.dart';
+>>>>>>> Stashed changes
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,19 +33,46 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+<<<<<<< Updated upstream
         BlocProvider(create: (context) => LayoutCubit()),
       BlocProvider(create: (context) => HomeCubit()..getProductData()),
 
       
+=======
+        BlocProvider(create: (context) => AuthCubit(ApiService(Dio()))),
+
+        BlocProvider(create: (context) => LayoutCubit()),
+
+        BlocProvider(create: (context) => HomeCubit()..getProductData()),
+
+        BlocProvider(create: (context) => CategoryCubit()..getCategorData()),
+
+        BlocProvider(create: (context) => WishlistCubit()),
+        BlocProvider(
+          create: (context) => CartCubit()..getCart(showLoading: false),
+        ),
+>>>>>>> Stashed changes
       ],
       child: ScreenUtilInit(
         designSize: Size(412, 924),
         minTextAdapt: true,
+<<<<<<< Updated upstream
         child: MaterialApp(
       
           debugShowCheckedModeBanner: false,
           home: Shoplayout(),
         ),
+=======
+        builder: (context, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: true
+                // showOnboarding
+                ? const OnboardingScreen()
+                : (isLoggedIn ? const Shoplayout() : const SignInView()),
+          );
+        },
+>>>>>>> Stashed changes
       ),
     );
   }

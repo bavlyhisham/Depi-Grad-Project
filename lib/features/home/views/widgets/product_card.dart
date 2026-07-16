@@ -1,3 +1,10 @@
+<<<<<<< Updated upstream
+=======
+// ignore_for_file: unused_import
+
+import 'package:depi/features/cart/controller/cart_cubit.dart';
+import 'package:depi/features/cart/controller/cart_states.dart';
+>>>>>>> Stashed changes
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -161,6 +168,50 @@ class Productcard extends StatelessWidget {
                         // ),
                       ],
                     ),
+<<<<<<< Updated upstream
+=======
+                    SizedBox(width: 5.w),
+                    Icon(
+                      Icons.star,
+                      size: 20.sp,
+                      color: const Color.fromRGBO(253, 216, 53, 1),
+                    ),
+                    const Spacer(),
+
+                    BlocBuilder<CartCubit, CartStates>(
+                      builder: (context, state) {
+                        var productId = products[index].id;
+                        var cartCubit = context.read<CartCubit>();
+                        bool isLoading =
+                            cartCubit.loadingProducts[productId] ?? false;
+                    
+                        return SizedBox(
+                          height: 30.h,
+                          width: 30.w,
+                          child: IconButton(
+                            onPressed: () {
+                              if (!isLoading) {
+                                cartCubit.addToCart(products[index].id, 1, products[index].quantity);
+                              }
+                            },
+                            style: IconButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              backgroundColor: const Color.fromRGBO(0, 65, 130, 1),
+                            ),
+                            icon: isLoading
+                                ? SizedBox(
+                                    width: 12.w,
+                                    height: 12.h,
+                                    child: const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Icon(Icons.add, size: 25.sp , color: Colors.white),
+                          ),
+                        );
+                      },
+                    ),
+>>>>>>> Stashed changes
                   ],
                 ),
               ),

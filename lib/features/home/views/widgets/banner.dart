@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:depi/core/widgets/button.dart';
+import 'package:depi/features/category/controler/category_cubit.dart';
+import 'package:depi/features/category/views/widgets/product_by_categoty_photo.dart';
 import 'package:depi/features/home/controler/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +20,7 @@ class _ShopBannerState extends State<ShopBanner> {
 
   @override
   Widget build(BuildContext context) {
-    // var cubit = CategoryCubit.get(context);
+    var cubit = CategoryCubit.get(context);
     var homeCubit = HomeCubit.get(context);
     return Stack(
       children: [
@@ -84,15 +86,15 @@ class _ShopBannerState extends State<ShopBanner> {
                             foregoundcolor: Colors.white,
                             buttontitle: 'Shop Now',
                             onPressed: () {
-                              // // cubit.getProductOfCategory('Electronics',homeCubit.products);
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) {
-                              //       return ProductByCategotyPhoto();
-                              //     },
-                              //   ),
-                              // );
+                              // cubit.getProductOfCategory('Electronics',homeCubit.products);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ProductByCategotyPhoto();
+                                  },
+                                ),
+                              );
                             },
                           ),
                         ),
@@ -163,15 +165,15 @@ class _ShopBannerState extends State<ShopBanner> {
                             foregoundcolor: Color.fromRGBO(0, 65, 130, 1),
                             buttontitle: 'Shop Now',
                             onPressed: () {
-                              // cubit.getProductOfCategory('Electronics',homeCubit.products);
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) {
-                              //       return ProductByCategotyPhoto();
-                              //     },
-                              //   ),
-                              // );
+                              cubit.getProductOfCategory('Electronics',homeCubit.products);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ProductByCategotyPhoto();
+                                  },
+                                ),
+                              );
                             },
                           ),
                         ),
@@ -242,15 +244,15 @@ class _ShopBannerState extends State<ShopBanner> {
                             foregoundcolor: Colors.white,
                             buttontitle: 'Shop Now',
                             onPressed: () {
-                              // cubit.getProductOfCategory('Women\'s Fashion',homeCubit.products);
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) {
-                              //       return ProductByCategotyPhoto();
-                              //     },
-                              //   ),
-                              // );
+                              cubit.getProductOfCategory('Women\'s Fashion',homeCubit.products);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ProductByCategotyPhoto();
+                                  },
+                                ),
+                              );
                             },
                           ),
                         ),

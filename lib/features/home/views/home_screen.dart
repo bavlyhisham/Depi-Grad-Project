@@ -1,6 +1,8 @@
 import 'package:depi/features/home/controler/home_cubit.dart';
 import 'package:depi/features/home/controler/home_states.dart';
 import 'package:depi/features/home/views/widgets/banner.dart';
+import 'package:depi/features/home/views/widgets/categories.dart';
+import 'package:depi/features/home/views/widgets/head_of_category.dart';
 import 'package:depi/features/home/views/widgets/head_of_product.dart';
 import 'package:depi/features/home/views/widgets/products.dart';
 import 'package:depi/features/home/views/widgets/search_tap.dart';
@@ -28,8 +30,8 @@ class _HomescreenState extends State<Homescreen> {
             padding: const EdgeInsets.all(8.0),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                // Headofcategory(),
-                // Categories(),
+                Headofcategory(),
+                Categories(),
                 Headofproduct(),
               ]),
             ),
@@ -142,6 +144,7 @@ class _HomescreenState extends State<Homescreen> {
               }
             },
             child: Scaffold(
+              backgroundColor: Colors.white,
               body:
                   cubit.products.isNotEmpty
                       ?

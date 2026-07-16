@@ -30,7 +30,7 @@ class Shoplayout extends StatelessWidget {
                 children: [
                   SizedBox(width: 8.w),
                   Text(
-                    'Store',
+                    'Depi Store',
                     style: TextStyle(
                       color: Color(0xff004182),
                       fontSize: 22.sp,
