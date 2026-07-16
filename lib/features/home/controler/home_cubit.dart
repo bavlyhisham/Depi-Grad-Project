@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:depi/core/networks/remote/dio_helper.dart';
 import 'package:depi/core/networks/remote/product_model.dart';
 import 'package:depi/features/home/controler/home_states.dart';
@@ -5,7 +7,6 @@ import 'package:depi/features/layout/controler/layout_cubit.dart';
 import 'package:depi/features/layout/controler/layout_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 class HomeCubit extends Cubit<HomeStates> {
   HomeCubit() : super(HomeIntialState());
@@ -56,12 +57,19 @@ class HomeCubit extends Cubit<HomeStates> {
     return true;
   }
 
-
-
   void getProductData() {
+    print("getProductData called");
+
     emit(GetProductLoadingState());
+
     DioHelper.getData(url: '/api/v1/products')
         .then((value) {
+          print("Status Code: ${value.statusCode}");
+          print("Products Count: ${(value.data['data'] as List).length}");
+          print(
+            "First Image: ${(value.data['data'] as List).first['imageCover']}",
+          );
+
           products = (value.data['data'] as List)
               .map((e) => Product.fromJson(e))
               .toList();
@@ -69,16 +77,13 @@ class HomeCubit extends Cubit<HomeStates> {
           emit(GetProductdatasuccessful());
         })
         .catchError((e) {
-          print('GetPrdouctdataError $e');
+          print("GetProductDataError: $e");
           emit(GetProductError());
         });
   }
 
   void seeAllCategories(BuildContext context) {
-  LayoutCubit.get(context).currentindex = 1;
-  LayoutCubit.get(context).emit(BottomNavBarChangeState());
-
+    LayoutCubit.get(context).currentindex = 1;
+    LayoutCubit.get(context).emit(BottomNavBarChangeState());
   }
-  
-  
 }

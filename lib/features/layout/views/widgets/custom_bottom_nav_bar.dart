@@ -42,7 +42,7 @@ class Custombottomnavbar extends StatelessWidget {
   }
 }
 
-BottomNavigationBarItem buildItem(IconData icon, int index, LayoutCubit cubit ) {
+BottomNavigationBarItem buildItem(IconData icon, int index, LayoutCubit cubit) {
   return BottomNavigationBarItem(
     label: '',
     icon: AnimatedContainer(

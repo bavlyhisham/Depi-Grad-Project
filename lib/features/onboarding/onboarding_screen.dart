@@ -64,7 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Color topColor = isBluePage ? Colors.white : Colors.blue.shade900;
               Color descColor = isBluePage ? Colors.white70 : Colors.blueGrey;
               
-              // تحديد لون العنوان العلوي: أزرق في الصفحة الثانية، وأبيض في غيرها
+              
               Color titleColor = (index == 1) ? Colors.blue.shade900 : Colors.white;
 
               return Column(
@@ -78,7 +78,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         children: [
                           Image.asset('assets/images/logo.png', height: 40, color: topColor),
                           const SizedBox(height: 5),
-                          // استخدام اللون الجديد هنا
+                          
                           Text(topTitles[index], style: TextStyle(color: titleColor, fontSize: 24, fontWeight: FontWeight.bold)),
                           Text(topDescriptions[index], style: TextStyle(color: descColor, fontSize: 16)),
                         ],

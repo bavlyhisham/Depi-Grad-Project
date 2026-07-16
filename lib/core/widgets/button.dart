@@ -1,3 +1,5 @@
+// ignore_for_file: dead_code, dead_null_aware_expressions, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -6,15 +8,15 @@ class DefaultButton extends StatelessWidget {
   final Color? backgroundcolor;
   final Color? foregoundcolor;
   final void Function()? onPressed;
-  final double? fontSize; // خليناه يقبل يكون فاضي عشان الـ ?? تشتغل صح
+  final double? fontSize;
 
   const DefaultButton({
-    this.buttontitle = "",
-    this.backgroundcolor = Colors.blue, // القيم الافتراضية الصح بتكون هنا
-    this.foregoundcolor = Colors.white, // خلتلك لون النص أبيض عشان يبان ع الأزرق
-    required this.onPressed,
-    this.fontSize, // شيلنا الـ required وخليناه اختياري عشان لو متبعتش ياخد 20 تلقائي
     super.key,
+    this.buttontitle = "",
+    this.backgroundcolor = Colors.blue,
+    this.foregoundcolor = Colors.white,
+    required this.onPressed,
+    this.fontSize,
   });
 
   @override
@@ -29,14 +31,14 @@ class DefaultButton extends StatelessWidget {
           backgroundColor: backgroundcolor,
           foregroundColor: foregoundcolor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.r), // تعديل بسيط هنا عشان يشتغل صح
+            borderRadius: BorderRadius.circular(15.r),
           ),
         ),
         onPressed: onPressed,
         child: Text(
           buttontitle,
           style: TextStyle(
-            fontSize: fontSize ?? 20.sp, // لو مبعتيش مقاس، هيبقى 20 تلقائي
+            fontSize: fontSize ?? 20.sp,
             fontWeight: FontWeight.w700,
           ),
         ),

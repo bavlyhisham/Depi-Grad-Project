@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart'; 
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/cash/cache_helper.dart';
-import 'package:depi/core/networks/remote/api_service.dart'; 
+import 'package:depi/core/networks/remote/api_service.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -14,20 +14,18 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       var result = await apiService.post(
         endPoint: '/api/v1/auth/signin',
-        data: {
-          'email': email,
-          'password': password,
-        },
+        data: {'email': email, 'password': password},
       );
-     
+
       String token = result['token'];
-      
+
       await CacheHelper.saveData(key: 'token', value: token);
 
       emit(AuthSuccess(token: token));
     } catch (e) {
       if (e is DioException) {
-        final errorMessage = e.response?.data['message'] ?? "Something went wrong";
+        final errorMessage =
+            e.response?.data['message'] ?? "Something went wrong";
         emit(AuthFailure(errMessage: errorMessage));
       } else {
         emit(AuthFailure(errMessage: e.toString()));
@@ -49,8 +47,8 @@ class AuthCubit extends Cubit<AuthState> {
           "name": name,
           "email": email,
           "password": password,
-          "rePassword": password, 
-          "phone": phone
+          "rePassword": password,
+          "phone": phone,
         },
       );
 
@@ -60,7 +58,8 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthSuccess(token: token));
     } catch (e) {
       if (e is DioException) {
-        final errorMessage = e.response?.data['message'] ?? "Something went wrong";
+        final errorMessage =
+            e.response?.data['message'] ?? "Something went wrong";
         emit(AuthFailure(errMessage: errorMessage));
       } else {
         emit(AuthFailure(errMessage: e.toString()));
@@ -68,7 +67,6 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  
   Future<void> forgotPassword({required String email}) async {
     emit(ForgotPasswordLoading());
     try {
@@ -78,13 +76,18 @@ class AuthCubit extends Cubit<AuthState> {
       );
 
       if (data['statusMsg'] == 'fail') {
-         emit(ForgotPasswordFailure(data['message']));
+        emit(ForgotPasswordFailure(data['message']));
       } else {
-         emit(ForgotPasswordSuccess(data['message'] ?? "Reset code sent to your email!"));
+        emit(
+          ForgotPasswordSuccess(
+            data['message'] ?? "Reset code sent to your email!",
+          ),
+        );
       }
     } catch (e) {
       if (e is DioException) {
-        final errorMessage = e.response?.data['message'] ?? "Something went wrong";
+        final errorMessage =
+            e.response?.data['message'] ?? "Something went wrong";
         emit(ForgotPasswordFailure(errorMessage));
       } else {
         emit(ForgotPasswordFailure(e.toString()));

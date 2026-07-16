@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,12 +11,12 @@ class DefaultTextbutton extends StatelessWidget {
   final void Function()? onPressed;
 
   const DefaultTextbutton({
+    super.key,
     this.buttonColor = Colors.black,
     this.fontsize,
     this.buttonTitle = '',
     this.fontWeight = FontWeight.bold,
     required this.onPressed,
-    super.key,
   });
 
   @override
@@ -28,15 +30,8 @@ class DefaultTextbutton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         buttonTitle,
-        style: TextStyle(
-          fontSize: fontsize ?? 20.sp, // لو مبعتيش مقاس، هيخليه 20 تلقائي
-          fontWeight: fontWeight,
-        ),
+        style: TextStyle(fontSize: fontsize ?? 20.sp, fontWeight: fontWeight),
       ),
     );
   }
 }
-
-
-
-

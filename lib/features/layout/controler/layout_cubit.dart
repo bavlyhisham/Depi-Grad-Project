@@ -6,21 +6,19 @@ import 'package:depi/features/wishlist/views/wish_list_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
-class LayoutCubit extends Cubit <LayoutStates>{
-  LayoutCubit():super(LayoutIntitialState());
+class LayoutCubit extends Cubit<LayoutStates> {
+  LayoutCubit() : super(LayoutIntitialState());
   static LayoutCubit get(context) => BlocProvider.of(context);
   int currentindex = 0;
   List<Widget> bottomscreens = [
     Homescreen(),
     CategoryScreen(),
     WishListScreen(),
-    SettingScreen()
+    SettingScreen(),
   ];
   void changebottomstate(int index) {
     currentindex = index;
-    
+
     emit(BottomNavBarChangeState());
   }
-
 }
