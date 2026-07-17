@@ -134,24 +134,6 @@ class _SignInViewState extends State<SignInView> {
                             color: AppColors.white,
                             decoration: TextDecoration.underline, 
                           ),
-                  ),
-
-                  
-                  const SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const ForgotPasswordView()),
-                        );
-                      },
-                      child: const Text(
-                        'Forgot password', 
-                        style: TextStyle(
-                          color: AppColors.white,
-                          decoration: TextDecoration.underline, 
                         ),
                       ),
                     ),
