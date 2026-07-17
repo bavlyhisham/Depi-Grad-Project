@@ -66,10 +66,9 @@ class Main extends StatelessWidget {
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: true
-                // showOnboarding
-                ? const OnboardingScreen()
-                : (isLoggedIn ? const Shoplayout() : const SignInView()),
+            home: showOnboarding
+    ? const OnboardingScreen()
+    : (isLoggedIn ? const Shoplayout() : const SignInView()),
           );
         },
       ),

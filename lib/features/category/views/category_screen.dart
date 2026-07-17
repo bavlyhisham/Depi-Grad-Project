@@ -175,7 +175,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           Expanded(
                             child: isLoading
                                 ? const Center(
-                                    child: CircularProgressIndicator(),
+                                    child: CircularProgressIndicator(
+                                      color: Color.fromRGBO(0, 65, 130, 1),
+                                    ),
                                   )
                                 : errorMessage != null
                                 ? Center(child: Text(errorMessage!))

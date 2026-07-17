@@ -1,17 +1,18 @@
-import 'package:depi/features/wishlist/controller/wishlist_cubit.dart';
+import 'package:depi/features/cart/controller/cart_cubit.dart';
 import 'package:depi/features/cart/controller/cart_states.dart';
 import 'package:depi/features/cart/views/cartScreen.dart';
 import 'package:depi/features/cart/views/widgets/cart_badge.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:depi/core/networks/remote/product_model.dart';
 import 'package:depi/features/product_detials/controller/product_details_cubit.dart';
 import 'package:depi/features/product_detials/controller/product_details_states.dart';
 import 'package:depi/features/product_detials/views/widgets/product_actions_section.dart';
 import 'package:depi/features/product_detials/views/widgets/product_details_image_section.dart';
 import 'package:depi/features/product_detials/views/widgets/product_details_info_section.dart';
-import 'package:depi/features/cart/controller/cart_cubit.dart';
+import 'package:depi/features/wishlist/controller/wishlist_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:depi/core/networks/remote/product_model.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   final Product product;
@@ -28,6 +29,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
           return Scaffold(
             backgroundColor: Colors.white,
+
             appBar: AppBar(
               elevation: 0,
               backgroundColor: Colors.white,
@@ -73,6 +75,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 ),
               ],
             ),
+
             body: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               child: Column(
@@ -87,11 +90,13 @@ class ProductDetailsScreen extends StatelessWidget {
                       context.read<WishlistCubit>().toggleWishlist(product);
 
                       cubit.toggleFavorite();
+
                       final isNowFavorite = context
                           .read<WishlistCubit>()
                           .isProductFavorite(product);
 
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
@@ -115,29 +120,29 @@ class ProductDetailsScreen extends StatelessWidget {
                   ProductDetailsInfo(product: product, cubit: cubit),
 
                   SizedBox(height: 24.h),
-                  ProductDetailsActions(
-                    count: cubit.count,
-
-                    onIncrease: () {
-                      cubit.increaseCount();
-                    },
-
-                    onDecrease: () {
-                      cubit.decreaseCount();
-                    },
-
-                    onAddToCart: () {
-                      context.read<CartCubit>().addToCart(
-                        product.id,
-                        cubit.count,
-                        product.quantity,
-                      );
-                    },
-                  ),
-
-                  SizedBox(height: 20.h),
                 ],
               ),
+            ),
+
+            bottomNavigationBar: ProductDetailsActions(
+              productId: product.id,
+              count: cubit.count,
+
+              onIncrease: () {
+                cubit.increaseCount();
+              },
+
+              onDecrease: () {
+                cubit.decreaseCount();
+              },
+
+              onAddToCart: () {
+                context.read<CartCubit>().addToCart(
+                  product.id,
+                  cubit.count,
+                  product.quantity,
+                );
+              },
             ),
           );
         },

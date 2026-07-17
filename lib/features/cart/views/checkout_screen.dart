@@ -21,8 +21,12 @@ class CheckoutScreen extends StatelessWidget {
     final total = subtotal - discount + shipping;
 
     return Scaffold(
+        backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Checkout"),
+        title: const Text("Checkout",style: TextStyle(
+          color: Color(0xff06004F),
+          fontWeight: FontWeight.bold
+        ),),
         centerTitle: true,
         backgroundColor: Colors.white,
         foregroundColor: const Color(0xff004182),
@@ -113,6 +117,7 @@ class CheckoutScreen extends StatelessWidget {
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
+                      backgroundColor: Colors.green,
                       content: Text(
                         "Order #$orderNumber confirmed successfully 🎉",
                       ),

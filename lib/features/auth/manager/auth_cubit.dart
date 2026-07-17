@@ -8,7 +8,7 @@ class AuthCubit extends Cubit<AuthState> {
   final ApiService apiService;
   AuthCubit(this.apiService) : super(AuthInitial());
 
-  // دالة تسجيل الدخول
+
   Future<void> login({required String email, required String password}) async {
     emit(AuthLoading());
     try {
