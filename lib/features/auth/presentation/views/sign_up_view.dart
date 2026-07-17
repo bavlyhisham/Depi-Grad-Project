@@ -37,7 +37,8 @@ class _SignUpViewState extends State<SignUpView> {
         listener: (context, state) {
           if (state is AuthSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Account Created Successfully!')),
+              const SnackBar(content: Text('Account Created Successfully!'),
+              backgroundColor: Colors.green,),
             );
 
             

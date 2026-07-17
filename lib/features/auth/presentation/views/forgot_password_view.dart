@@ -91,7 +91,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                                 );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Please enter your email')),
+                                  const SnackBar(content: Text('Please enter your email'),
+                                  backgroundColor: Colors.red,),
                                 );
                               }
                             },
