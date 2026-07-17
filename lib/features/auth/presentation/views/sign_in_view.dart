@@ -52,6 +52,12 @@ class _SignInViewState extends State<SignInView> {
             );
           }
         },
+
+
+
+
+
+        
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -61,18 +67,20 @@ class _SignInViewState extends State<SignInView> {
                 children: [
                   const SizedBox(height: 60),
                   
-                  Center(
-                    child: Image.asset(
-                      'assets/images/Borcelle.png',
-                      height: 200, 
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Text('E-COMMERCE', style: TextStyle(color: AppColors.white, fontSize: 32, fontWeight: FontWeight.bold));
-                      },
-                    ),
-                  ),
+                Center(
+  child: Text(
+    'STORE',
+    style: TextStyle(
+      color: AppColors.white,
+      fontSize: 40,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 2,
+    ),
+  ),
+),
                   const SizedBox(height: 40),
                   const Text(
-                    'Welcome Back To Borcelle', 
+                    'Welcome Back To Store', 
                     style: TextStyle(color: AppColors.white, fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   const Text(
@@ -96,6 +104,9 @@ class _SignInViewState extends State<SignInView> {
                     style: TextStyle(color: AppColors.white, fontSize: 16),
                   ),
                   const SizedBox(height: 10),
+
+
+
                   
                   CustomTextField(
                     hintText: 'enter your password', 
@@ -113,6 +124,7 @@ class _SignInViewState extends State<SignInView> {
                       },
                     ),
                   ),
+
                   
                   const SizedBox(height: 10),
                   Align(

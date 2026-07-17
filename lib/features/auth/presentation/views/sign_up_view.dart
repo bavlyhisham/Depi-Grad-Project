@@ -4,7 +4,7 @@ import '../../../../core/utils/app_colors.dart';
 import '../../manager/auth_cubit.dart';
 import '../../manager/auth_state.dart';
 import '../widgets/custom_text_field.dart';
-// التعديل هنا: استخدام مسار نسبي مباشر طالما هما في نفس المجلد
+
 import 'sign_in_view.dart';
 
 class SignUpView extends StatefulWidget {
@@ -37,10 +37,11 @@ class _SignUpViewState extends State<SignUpView> {
         listener: (context, state) {
           if (state is AuthSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Account Created Successfully!')),
+              const SnackBar(content: Text('Account Created Successfully!'),
+              backgroundColor: Colors.green,),
             );
 
-            // التوجيه لصفحة الـ Login بدون const لمنع أخطاء الـ Constructor
+            
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => SignInView()),
@@ -56,17 +57,17 @@ class _SignUpViewState extends State<SignUpView> {
                 children: [
                   const SizedBox(height: 50),
 
-                  Center(
-                    child: Image.asset(
-                      'assets/images/Borcelle.png',
-                      height: 200,
-                      errorBuilder: (context, error, stackTrace) => const Icon(
-                        Icons.image_not_supported,
-                        size: 100,
-                        color: AppColors.white,
-                      ),
-                    ),
-                  ),
+                 Center(
+  child: Text(
+    'STORE',
+    style: TextStyle(
+      color: AppColors.white,
+      fontSize: 40,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 2,
+    ),
+  ),
+),
 
                   const SizedBox(height: 20),
 
