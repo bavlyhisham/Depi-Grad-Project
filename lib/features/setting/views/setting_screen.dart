@@ -21,7 +21,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   void initState() {
     super.initState();
-    _loadSettings();
+    _loadSettings();//بتجيب البيانات قبل ما الصفحه تظهر
   }
 
   Future<void> _loadSettings() async {
@@ -33,6 +33,16 @@ class _SettingScreenState extends State<SettingScreen> {
     }
   }
 
+//الدالة دي مسؤولة عن تحميل الإعدادات المحفوظة أول ما الصفحة تفتح. هي بتقرأ قيمة الإشعارات من الـ Cache
+
+//Future<void> → "لأن الدالة ممكن تاخد وقت وهي بتقرأ البيانات، ومش بترجع أي قيمة."
+//async → "علشان أقدر أتعامل مع العمليات اللي بتاخد وقت زي قراءة البيانات."
+//setState → "بتبلغ Flutter إن البيانات اتغيرت، فتعمل إعادة رسم للشاشة."
+
+
+
+
+
   // الدالة المسؤولة عن تسجيل الخروج الفعلي والانتقال لصفحة الـ SignIn
   Future<void> _logout(BuildContext context) async {
     await CacheHelper.removeData(key: 'token');
@@ -41,7 +51,7 @@ class _SettingScreenState extends State<SettingScreen> {
       value: false,
     );
 
-    if (!mounted) return;
+    if (!mounted) return;//"بتأكد إن الصفحة لسه موجودة، ولو اتقفلت بخرج من الدالة علشان متحصلش أخطاء."
 
     // توجيه المستخدم لصفحة الـ SignIn وحذف كل الصفحات السابقة من الـ Stack
     Navigator.pushAndRemoveUntil(
@@ -54,8 +64,8 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) {//دي دالة build، وهي المسؤولة عن رسم واجهة الصفحة، وكل مرة البيانات تتغير بسبب setState الدالة دي بتشتغل تاني وتحدث الشاشة."
+    return Scaffold(//"الـ Scaffold هو الهيكل الأساسي للصفحة، وبيحتوي على الـ AppBar والـ Body."
       appBar: AppBar(
         title: const Text(
           "Settings",
@@ -79,10 +89,11 @@ class _SettingScreenState extends State<SettingScreen> {
           },
         ),
       ),
-      body: ListView(
+      //"الجزء ده مسؤول عن بناء واجهة صفحة الإعدادات. استخدمت Scaffold كهيكل للصفحة، وداخلها AppBar بعنوان Settings وسهم رجوع مخصص يرجع لصفحة ShopLayout. بعد كده استخدمت ListView علشان الصفحة تكون قابلة للتمرير. أنشأت Widgets مخصصة زي _buildSectionHeader و_buildSettingTile لتقليل تكرار الكود. وفي قسم الإشعارات استخدمت SwitchListTile، ولما المستخدم يغير حالته بحدث القيمة باستخدام setState، وبعدها بحفظها في الـ Cache، وفي النهاية بعرض SnackBar لتأكيد التغيير."
+      body: ListView(//"ListView بتخلي الصفحة قابلة للتمرير لو المحتوى كبير."
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
         children: [
-          _buildSectionHeader("Account & Security"),
+          _buildSectionHeader("Account & Security"),//"دي Widget أنا عاملها علشان تعرض عنوان كل قسم بدل ما أكرر نفس الكود."
           _buildSettingTile(
             icon: Icons.person_outline,
             title: "Edit Profile",
@@ -96,8 +107,12 @@ class _SettingScreenState extends State<SettingScreen> {
             onTap: () => _showChangePasswordDialog(context),
           ),
           
-          const Divider(height: 30),
+          const Divider(height: 30),//"Divider هو خط فاصل بين العناصر علشان ينظم شكل الصفحة ويقسم الأقسام عن بعض."
 
+
+
+
+//"هنا بدأت قسم اسمه Preferences باستخدام _buildSectionHeader. بعد كده استخدمت Card علشان أحط عنصر الإشعارات داخل كارت ويكون شكله منظم. وجواه استخدمت SwitchListTile لأنه Widget جاهز بيعرض عنوان وساب تايتل وسويتش تشغيل وإيقاف."
           _buildSectionHeader("Preferences"),
           
           Card(
@@ -126,12 +141,20 @@ class _SettingScreenState extends State<SettingScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(value ? "Notifications turned ON" : "Notifications turned OFF"),
+                        backgroundColor: Colors.green,
                     duration: const Duration(seconds: 1),
                   ),
                 );
               },
             ),
           ),
+
+
+
+
+
+
+
 
           const Divider(height: 30),
 
@@ -190,6 +213,11 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
+
+
+
+
+
   Widget _buildSectionHeader(String title) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, bottom: 8.0, top: 4.0),
@@ -231,7 +259,7 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  void _showEditProfileSheet(BuildContext context) {
+  void _showEditProfileSheet(BuildContext context) {//"الدالة دي بتفتح Bottom Sheet من أسفل الشاشة علشان المستخدم يقدر يغير اسمه."
     final TextEditingController nameController = TextEditingController(text: _userName);
     showModalBottomSheet(
       context: context,
@@ -273,7 +301,10 @@ class _SettingScreenState extends State<SettingScreen> {
                     });
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Name updated successfully!")),
+                      const SnackBar(content: Text("Name updated successfully!"),
+                       backgroundColor: Colors.green,
+                       duration: Duration(seconds: 1),
+                      ),
                     );
                   }
                 },
@@ -301,7 +332,7 @@ class _SettingScreenState extends State<SettingScreen> {
           title: const Text("Change Password"),
           content: TextField(
             controller: passwordController,
-            obscureText: true,
+            obscureText: true,//"بيخفي كلمة المرور أثناء الكتابة."
             decoration: const InputDecoration(
               labelText: "Enter new password",
               hintText: "At least 6 characters",
@@ -317,7 +348,11 @@ class _SettingScreenState extends State<SettingScreen> {
                 if (passwordController.text.length >= 6) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Password updated successfully!")),
+                    const SnackBar(content: Text("Password updated successfully!") ,
+                    backgroundColor: Colors.green,
+                   duration: Duration(seconds: 1),),
+                    
+                    
                   );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
